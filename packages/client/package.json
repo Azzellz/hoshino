@@ -1,0 +1,19 @@
+{
+    "name": "@pic-bed/client",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "dev": "vite",
+        "build": "run-p type-check \"build-only {@}\" --",
+        "preview": "vite preview",
+        "test:unit": "vitest",
+        "build-only": "vite build",
+        "type-check": "vue-tsc --build --force",
+        "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+        "format": "prettier --write src/"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+}
