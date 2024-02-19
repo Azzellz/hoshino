@@ -2,18 +2,23 @@
     <div id="home-container">
         <n-space vertical>
             <h3 id="title">柚子茶的图床.</h3>
-            <hr class="hr-twill" />
+            <divide-line></divide-line>
             <a id="repo-link" href="https://github.com/Azzellz/my-picture-bed">
                 开源,觉得好的话可以给个star~
             </a>
-            <upload-image></upload-image>
+            <n-input v-model:value="key" type="text" placeholder="请输入key"></n-input>
+            <upload-image :secretKey="key"></upload-image>
         </n-space>
     </div>
 </template>
 
 <script setup lang="ts">
-import { NSpace } from 'naive-ui'
+import { NSpace, NInput } from 'naive-ui'
 import UploadImage from '@/components/Upload-Image.vue'
+import DivideLine from '@/components/Divide-Line.vue'
+import { ref } from 'vue'
+
+const key = ref('')
 </script>
 
 <style scoped>
@@ -33,9 +38,6 @@ import UploadImage from '@/components/Upload-Image.vue'
         transparent 1px,
         transparent 6px
     );
-}
-#title {
-    /* font-style: italic; */
 }
 #repo-link {
     font-size: 10px;
