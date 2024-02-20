@@ -16,16 +16,23 @@
                     <archive-icon />
                 </n-icon>
             </div>
-            <n-text style="font-size: 16px"> 点击或者拖动文件到该区域来上传 </n-text>
+            <n-text style="font-size: 16px"> 点击或者拖动图片到该区域来上传 </n-text>
             <n-p depth="3" style="margin: 8px"> 请不要上传非法图片 o.O </n-p>
         </n-upload-dragger>
     </n-upload>
     <divide-line></divide-line>
     <n-list v-show="uploadedFiles.length" hoverable clickable>
-        <template #header> 点击复制链接</template>
-        <n-list-item :link="file.link" v-for="file in uploadedFiles" :key="file.id">
-            {{ file.name }}
-            {{ file.link }}
+        <template #header> 上传记录,点击复制链接</template>
+        <n-list-item
+            :link="file.link"
+            v-for="file in uploadedFiles"
+            :key="file.id"
+            @click="copy(file.link)"
+        >
+            <div>图片: {{ file.name }}</div>
+            <n-ellipsis style="max-width: 70vw">
+                链接: <a :href="file.link" style="width: 100px">{{ file.link }}</a>
+            </n-ellipsis>
         </n-list-item>
     </n-list>
 </template>
@@ -40,6 +47,7 @@ import {
     useMessage,
     NList,
     NListItem,
+    NEllipsis,
     type UploadFileInfo
 } from 'naive-ui'
 import { ArchiveOutline as ArchiveIcon } from '@vicons/ionicons5'
@@ -59,7 +67,7 @@ const { secretKey } = defineProps<{
 const action = config.server.host + ':' + config.server.port + config.server.imgRoute
 //#endregion
 
-//处理回调
+//文件处理
 //#region
 const uploadedFiles = ref<
     {
@@ -94,10 +102,21 @@ const handleUploadFinished = (opts: any) => {
 
 //#endregion
 
-//点击复制链接
+//ListItem操作
 //#region
-
+const copy = (content: string) => {
+    //目前仅限电脑端
+    navigator.clipboard.writeText(content)
+    messager.success('复制成功 :>')
+}
+// const deleteRecord = (index: number) => {
+//     uploadedFiles.value.splice(index, 1)
+// }
 //#endregion
 </script>
 
-<style scoped></style>
+<style scoped>
+a {
+    color: gray;
+}
+</style>
